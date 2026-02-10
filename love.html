@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html
+lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para el amor de mi Vida ❤️💙</title>
+    <style>
+        :root {
+            --rosa: #ff9a9e;
+            --azul: #a1c4fd;
+            --rosa-fuerte: #ff4d6d;
+            --azul-fuerte: #4facfe;
+            --glass: rgba(255, 255, 255, 0.25);
+        }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%; width: 100%;
+            font-family: 'Poppins', sans-serif; overflow: hidden;
+            background: linear-gradient(135deg, var(--rosa) 0%, var(--azul) 100%);
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%234facfe" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>'), auto;
+        }
+
+        #particles { position: fixed; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .particle { position: absolute; background: white; border-radius: 50%; opacity: 0.5; animation: blink 3s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 0.2; transform: scale(1); } 50% { opacity: 0.8; transform: scale(1.3); } }
+
+        #login-screen {
+            position: fixed; width: 100%; height: 100vh;
+            background: white; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 3000;
+            transition: 1s cubic-bezier(0.7, 0, 0.3, 1);
+        }
+
+        .btn-login {
+            padding: 15px 45px; font-size: 1.3rem; border: none;
+            border-radius: 50px; cursor: pointer; margin: 12px;
+            transition: 0.3s; font-weight: 600;
+        }
+        #btn-si { background: linear-gradient(45deg, var(--rossa-fuerte), var(--azul-fuerte)); color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        #btn-no { background: #f0f0f0; color: #999; transition: 0.1s; }
+
+        .page {
+            width: 100%; height: 100vh; display: flex; justify-content: center;
+            align-items: center; position: absolute; top: 0; left: 0;
+            opacity: 0; visibility: hidden; transition: 0.8s ease;
+        }
+        .page.active { opacity: 1; visibility: visible; }
+
+        .card {
+            background: var(--glass); backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            padding: 25px; border-radius: 30px;
+            width: 92%; max-width: 550px; text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .img-frame {
+            width: 100%; max-width: 480px; height: auto; aspect-ratio: 1 / 1.2;
+            border-radius: 20px; object-fit: cover; margin-bottom: 20px; 
+            border: 4px solid white; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .frase {
+            font-family: 'Dancing Script', cursive; font-size: 1.7rem;
+            color: #333; margin-bottom: 25px; display: block; line-height: 1.4;
+            max-width: 450px;
+        }
+
+        .btn-next {
+            background: white; color: var(--azul-fuerte); border: none;
+            padding: 14px 35px; border-radius: 50px; cursor: pointer;
+            font-weight: bold; transition: 0.3s; font-size: 1rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        #final-msg {
+            display: none; position: absolute; width: 100%; text-align: center;
+            top: 35%; color: white; font-weight: 900;
+            text-shadow: 0 0 20px var(--rosa-fuerte), 0 0 40px var(--azul-fuerte);
+            z-index: 100; animation: pulse 1s infinite;
+        }
+        
+        #primer-14 {
+            display: none; position: absolute; width: 100%; text-align: center;
+            top: 60%; color: white; font-size: 1.8rem; font-weight: 600;
+            z-index: 101; text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            font-family: 'Dancing Script', cursive;
+        }
+
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        .firework { position: absolute; width: 4px; height: 4px; border-radius: 50%; z-index: 50; }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div id="particles"></div>
+
+    <audio id="musica" preload="auto">
+        <source src="100_10.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="login-screen">
+        <h1 style="color: var(--rosa-fuerte); margin-bottom: 5px; text-align: center;">¿Quieres ser mi San Valentín?</h1>
+        <p style="color: var(--azul-fuerte); font-weight: bold; margin-bottom: 25px;">❤️💙 Para el Amor de mi Vida ❤️💙</p>
+        <div>
+            <button class="btn-login" id="btn-si" onclick="iniciar()">SÍ, ACEPTO</button>
+            <button class="btn-login" id="btn-no" onmouseover="escapar(this)">NO</button>
+        </div>
+    </div>
+
+    <div class="page" id="p1"><div class="card"><img src="img/amor1.jpeg" class="img-frame" alt="Foto 1"><span class="frase">"Contigo aprendí que los detalles no son una obligación, sino una necesidad de verte sonreír."</span><button class="btn-next" onclick="irA(2)">Siguiente ❤️</button></div></div>
+    <div class="page" id="p2"><div class="card"><img src="img/amor2.jpeg" class="img-frame" alt="Foto 2"><span class="frase">"El partido más importante ya lo gané el día que te pusiste mi misma camiseta."</span><button class="btn-next" onclick="irA(3)">Seguir 💙</button></div></div>
+    <div class="page" id="p3"><div class="card"><img src="img/amor3.jpeg" class="img-frame" alt="Foto 3"><span class="frase">"Gracias por tanto amor y paciencia."</span><button class="btn-next" onclick="irA(4)">Continuar ✨</button></div></div>
+    <div class="page" id="p4"><div class="card"><img src="img/amor4.jpeg" class="img-frame" alt="Foto 4"><span class="frase">"Contigo las celebraciones por fin tienen sentido."</span><button class="btn-next" onclick="irA(5)">Avanzar 🌹</button></div></div>
+    <div class="page" id="p5"><div class="card"><img src="img/amor5.jpeg" class="img-frame" alt="Foto 5"><span class="frase">"Caminando por Pueblos Mágicos entendí que la verdadera magia no son los lugares, sino ser la primera persona con la que decido compartir mi tiempo en serio."</span><button class="btn-next" onclick="irA(6)">Ver más 👀</button></div></div>
+    <div class="page" id="p6"><div class="card"><img src="img/amor6.jpeg" class="img-frame" alt="Foto 6"><span class="frase">"Caminamos por pueblitos mágicos, pero mi lugar favorito siempre será donde estés tú."</span><button class="btn-next" onclick="irA(7)">Seguir 🥰</button></div></div>
+    <div class="page" id="p7"><div class="card"><img src="img/amor7.jpeg" class="img-frame" alt="Foto 7"><span class="frase">"Por mil aventuras más a tu lado."</span><button class="btn-next" onclick="irA(8)">Ya casi... 💖</button></div></div>
+    <div class="page" id="p8"><div class="card"><img src="img/amor8.jpeg" class="img-frame" alt="Foto 8"><span class="frase">"Eres el mejor regalo de la vida."</span><button class="btn-next" onclick="irA(9)">Siguiente 🎀</button></div></div>
+    <div class="page" id="p9"><div class="card"><img src="img/amor9.jpeg" class="img-frame" alt="Foto 9"><span class="frase">"Te entrego mi corazón, por favor no lo rompas."</span><button class="btn-next" onclick="irA(10)">La sorpresa final 💌</button></div></div>
+
+    <div class="page" id="p10">
+        <div id="final-msg" style="font-size: 4rem;">¡TE AMO!</div>
+        <div id="primer-14" aria-label="Mensaje final">
+            <div>Nuestro primer 14 de febrero</div>
+            <div style="margin-top:8px; font-weight:700;">Con amor, tu Inge.</div>
+        </div>
+        <div class="card" id="final-card">
+            <img src="img/amor10.jpeg" class="img-frame" alt="Foto Final">
+            <span class="frase">"Mi mundo era uno antes de ti y es otro mucho mejor contigo. Te amo con una fuerza que no sabía que existía. Feliz Primer San Valentin Juntos, que sean muchisimos más"</span>
+            <button class="btn-next" onclick="celebrar()">¡Nuestra Sorpresa! 🎆</button>
+        </div>
+    </div>
+
+    <script>
+        const pContainer = document.getElementById('particles');
+        for(let i=0; i<60; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.width = p.style.height = Math.random() * 4 + 2 + 'px';
+            p.style.left = Math.random() * 100 + '%';
+            p.style.top = Math.random() * 100 + '%';
+            pContainer.appendChild(p);
+        }
+
+        let lluvia_interval = null;
+        let fuego_interval = null;
+
+        function escapar(btn) {
+            btn.style.position = 'absolute';
+            btn.style.top = Math.random() * 80 + '%';
+            btn.style.left = Math.random() * 80 + '%';
+        }
+
+        function iniciar() {
+            document.getElementById('login-screen').style.transform = 'translateY(-100%)';
+            document.getElementById('p1').classList.add('active');
+            
+            // Lógica de audio forzada
+            const audio = document.getElementById('musica');
+            audio.play().catch(e => console.log("Error al reproducir: ", e));
+            
+            lluvia();
+        }
+
+        function irA(n) {
+            document.querySelector('.page.active').classList.remove('active');
+            document.getElementById('p'+n).classList.add('active');
+        }
+
+        function lluvia() {
+            lluvia_interval = setInterval(() => {
+                const h = document.createElement('div');
+                h.style.position = 'fixed';
+                h.style.top = '-10%';
+                h.style.left = Math.random() * 100 + 'vw';
+                h.innerHTML = Math.random() > 0.5 ? '❤️' : '💙';
+                h.style.fontSize = Math.random() * 20 + 15 + 'px';
+                h.style.zIndex = '1000';
+                h.style.pointerEvents = 'none';
+                h.animate([{ transform: 'translateY(0)' }, { transform: `translateY(110vh) rotate(${Math.random()*360}deg)` }], { duration: 4000 });
+                document.body.appendChild(h);
+                setTimeout(() => h.remove(), 4000);
+            }, 300);
+        }
+
+        function celebrar() {
+            clearInterval(lluvia_interval);
+            document.getElementById('final-card').style.display = 'none';
+            document.getElementById('final-msg').style.display = 'block';
+            document.getElementById('primer-14').style.display = 'block';
+            
+            // Crear múltiples explosiones de fuegos
+            const explosiones = [
+                { delay: 0, x: 0.25, y: 0.35 },
+                { delay: 500, x: 0.75, y: 0.4 },
+                { delay: 1000, x: 0.5, y: 0.3 },
+                { delay: 1500, x: 0.2, y: 0.5 },
+                { delay: 2000, x: 0.8, y: 0.45 },
+                { delay: 2500, x: 0.5, y: 0.6 }
+            ];
+            
+            explosiones.forEach(exp => {
+                setTimeout(() => {
+                    fuego(exp.x * window.innerWidth, exp.y * window.innerHeight);
+                }, exp.delay);
+            });
+            
+            fuego_interval = setInterval(() => {
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight * 0.6;
+                fuego(x, y);
+            }, 600);
+            
+            setTimeout(() => clearInterval(fuego_interval), 8000);
+        }
+
+        function fuego(x = null, y = null) {
+            if (x === null) x = Math.random() * window.innerWidth;
+            if (y === null) y = Math.random() * window.innerHeight;
+            
+            const colors = ['#ff9a9e', '#a1c4fd', '#fff', '#4facfe', '#ff4d6d', '#FFD700', '#FF1493', '#00FF7F'];
+            const particulas = Math.random() * 25 + 50; // Entre 50 y 75 partículas
+            
+            for(let i = 0; i < particulas; i++) {
+                const p = document.createElement('div');
+                p.className = 'firework';
+                p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                p.style.left = x + 'px';
+                p.style.top = y + 'px';
+                p.style.width = Math.random() * 6 + 3 + 'px';
+                p.style.height = p.style.width;
+                p.style.borderRadius = '50%';
+                p.style.boxShadow = `0 0 ${Math.random() * 8 + 2}px ${p.style.backgroundColor}`;
+                
+                const angulo = Math.random() * Math.PI * 2;
+                const velocidad = Math.random() * 150 + 80;
+                const duracion = Math.random() * 800 + 800;
+                
+                document.body.appendChild(p);
+                
+                p.animate([
+                    { 
+                        transform: 'translate(0, 0) scale(1)', 
+                        opacity: 1 
+                    },
+                    { 
+                        transform: `translate(${Math.cos(angulo) * velocidad}px, ${Math.sin(angulo) * velocidad}px) scale(0)`, 
+                        opacity: 0 
+                    }
+                ], { 
+                    duration: duracion,
+                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                }).onfinish = () => p.remove();
+            }
+            
+            // Agregar confeti de emojis
+            for(let i = 0; i < 15; i++) {
+                const emoji = document.createElement('div');
+                emoji.style.position = 'fixed';
+                emoji.style.left = x + 'px';
+                emoji.style.top = y + 'px';
+                emoji.style.fontSize = Math.random() * 30 + 20 + 'px';
+                emoji.innerHTML = ['❤️', '💙', '✨', '💖', '🎆'][Math.floor(Math.random() * 5)];
+                emoji.style.pointerEvents = 'none';
+                emoji.style.zIndex = '100';
+                
+                const angulo = Math.random() * Math.PI * 2;
+                const velocidad = Math.random() * 120 + 60;
+                
+                document.body.appendChild(emoji);
+                
+                emoji.animate([
+                    { 
+                        transform: 'translate(0, 0) rotate(0deg) scale(1)',
+                        opacity: 1
+                    },
+                    { 
+                        transform: `translate(${Math.cos(angulo) * velocidad}px, ${Math.sin(angulo) * velocidad}px) rotate(360deg) scale(0)`,
+                        opacity: 0
+                    }
+                ], {
+                    duration: Math.random() * 1000 + 1000,
+                    easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                }).onfinish = () => emoji.remove();
+            }
+        }
+    </script>
+</body>
+</html>
