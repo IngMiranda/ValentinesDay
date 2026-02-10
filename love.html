@@ -37,7 +37,7 @@ lang="es">
             border-radius: 50px; cursor: pointer; margin: 12px;
             transition: 0.3s; font-weight: 600;
         }
-        #btn-si { background: linear-gradient(45deg, var(--rossa-fuerte), var(--azul-fuerte)); color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        #btn-si { background: linear-gradient(45deg, var(--rosa-fuerte), var(--azul-fuerte)); color: white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         #btn-no { background: #f0f0f0; color: #999; transition: 0.1s; }
 
         .page {
@@ -104,7 +104,7 @@ lang="es">
     <div id="particles"></div>
 
     <audio id="musica" preload="auto">
-        <source src="100_10.mp3" type="audio/mpeg">
+        <source src="./img/lo-tines-todo.mp3" type="audio/mpeg">
     </audio>
 
     <div id="login-screen">
@@ -163,9 +163,21 @@ lang="es">
             document.getElementById('login-screen').style.transform = 'translateY(-100%)';
             document.getElementById('p1').classList.add('active');
             
-            // Lógica de audio forzada
+            // Reproducir audio con manejo de errores
             const audio = document.getElementById('musica');
-            audio.play().catch(e => console.log("Error al reproducir: ", e));
+            audio.volume = 0.6;
+            audio.loop = true;
+            
+            const playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => console.log("✅ Música iniciada correctamente"))
+                    .catch(error => {
+                        console.log("⚠️ Error:", error);
+                        setTimeout(() => audio.play(), 500);
+                    });
+            }
             
             lluvia();
         }
